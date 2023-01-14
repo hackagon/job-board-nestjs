@@ -17,4 +17,8 @@ export class UserService {
   async findById(userId: Types.ObjectId) {
     return await this.userModel.findById(userId);
   }
+
+  async find() {
+    return await this.userModel.find();
+  }
 }

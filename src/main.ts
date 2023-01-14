@@ -1,4 +1,6 @@
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ValidationError } from 'class-validator';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -6,7 +8,17 @@ async function bootstrap() {
 
   app.setGlobalPrefix('/api')
 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (validationErrors: ValidationError[] = []) => {
+        return new BadRequestException(validationErrors);
+      },
+      validationError: {
+        target: false,
+      },
+    }),
+  );
 
-  await app.listen(3000);
+  await app.listen(4000);
 }
 bootstrap();

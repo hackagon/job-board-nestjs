@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { AuthModule } from "./auth/auth.module";
 import { CompanyModule } from "./company/company.module";
@@ -6,12 +7,18 @@ import { UserController } from "./user/controller/user.controller";
 import { UserService } from "./user/provider/user.service";
 import { UserModule } from "./user/user.module";
 
-
 // database
 // import modules
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/job_board_2'),
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        return {
+          uri: configService.get<string>('MONGO_URI')
+        }
+      },
+      inject: [ConfigService]
+    }),
 
     // modules
     AuthModule,

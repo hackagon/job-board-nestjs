@@ -6,7 +6,8 @@ import { User } from '../user/user.schema';
 export type CompanyDocument = HydratedDocument<Company>;
 
 @Schema({
-  collection: 'Company'
+  collection: 'Company',
+  timestamps: true,
 })
 export class Company {
   @Prop()

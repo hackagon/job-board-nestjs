@@ -1,13 +1,14 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { AbstractDocument } from 'src/common/abstract/abstract.schema';
 
-export type UserDocument = HydratedDocument<User>;
 
 @Schema({
-  collection: 'User'
+  collection: 'User',
+  timestamps: true
 })
-export class User {
+export class User extends AbstractDocument {
   @Prop()
   email: string;
 

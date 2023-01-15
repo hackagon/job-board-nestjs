@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import dotenv from 'dotenv'
 import path from 'path'
 import { ConfigService } from '@nestjs/config';
+import { AllExceptionsFilter } from './all-exceptions.filter';
 
 async function bootstrap() {
   dotenv.config({ path: path.join(__dirname + '/../.env') })
@@ -25,6 +26,8 @@ async function bootstrap() {
       },
     }),
   );
+
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   try {
     await app.listen(port);
